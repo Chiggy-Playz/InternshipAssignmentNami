@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nami_assignment/core/extensions.dart';
+import 'package:nami_assignment/modules/login/providers.dart';
 import 'package:nami_assignment/widgets/smart_attend_logo.dart';
 import 'package:nami_assignment/widgets/buttons.dart' as buttons;
 
@@ -63,7 +64,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     color: context.colorScheme.onPrimary,
                     fontWeight: FontWeight.w500),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                final authHandler = ref.read(authHandlerProvider.notifier);
+
+                // Replace the empty strings with the actual ID and password
+                // After validating above form fields
+                await authHandler.login("", "");
+              },
             ),
             const SizedBox(height: 32),
             TextButton(

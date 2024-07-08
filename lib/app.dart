@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nami_assignment/core/router.dart';
-import 'package:nami_assignment/theme.dart';
+import 'package:nami_assignment/style/theme.dart';
 
 class SmartAttendApp extends ConsumerWidget {
   const SmartAttendApp({super.key});

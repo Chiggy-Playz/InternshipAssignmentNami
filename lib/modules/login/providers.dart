@@ -9,12 +9,11 @@ part 'providers.g.dart';
 class AuthHandler extends _$AuthHandler {
   @override
   Future<UserModel?> build() async {
-    // Look for a token in the local storage
-    // Return it
+    // Look for a token in the local storage and return it
     // But thats out of the scope for this assignment
-    // So we will just return null
+    // So we will just return null in beginning
 
-    return null;
+    return state.value;
   }
 
   Future<void> login(String email, String password) async {
@@ -23,7 +22,7 @@ class AuthHandler extends _$AuthHandler {
     // So we'll create a dummy user
 
     await Future.delayed(const Duration(milliseconds: 500));
-    state = AsyncValue.data(
+    state = AsyncData(
       UserModel(
           id: 1,
           email: email,

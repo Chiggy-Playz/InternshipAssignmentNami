@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
+import 'package:nami_assignment/style/theme.dart';
 
 extension StringCasingExtension on String {
   String toCapitalized() =>
@@ -13,6 +14,7 @@ extension StringCasingExtension on String {
 
 extension BuildContextExtensions on BuildContext {
   ThemeData get theme => Theme.of(this);
+  CustomColors get customColors => theme.extension<CustomColors>()!;
   ColorScheme get colorScheme => theme.colorScheme;
   TextTheme get textTheme => theme.textTheme;
 
