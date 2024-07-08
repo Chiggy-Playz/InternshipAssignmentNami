@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nami_assignment/style/icons.dart';
 
 class ChipMenuEntry {
   final Widget child;
@@ -38,10 +39,18 @@ class _ChipMenuState extends State<ChipMenu> {
   @override
   Widget build(BuildContext context) {
     return MenuAnchor(
-
       builder: (context, controller, child) {
         return FilterChip(
-          label: _selectedEntry.child,
+          label: Row(
+            children: [
+              _selectedEntry.child,
+              const SizedBox(width: 8),
+              const Icon(
+                SmartAttendIcons.arrowDown,
+                size: 12,
+              ),
+            ],
+          ),
           selected: false,
           onSelected: (_) {
             if (controller.isOpen) {
@@ -51,14 +60,6 @@ class _ChipMenuState extends State<ChipMenu> {
             }
           },
           showCheckmark: false,
-          deleteIcon: const Icon(Icons.arrow_drop_down),
-          onDeleted: () {
-            if (controller.isOpen) {
-              controller.close();
-            } else {
-              controller.open();
-            }
-          },
         );
       },
       menuChildren: [

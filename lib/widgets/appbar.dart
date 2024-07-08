@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/login/providers.dart';
+import 'package:nami_assignment/style/icons.dart';
 
 class AppBar extends ConsumerWidget implements PreferredSizeWidget {
   const AppBar({
@@ -35,8 +36,9 @@ class AppBar extends ConsumerWidget implements PreferredSizeWidget {
                       color: context.colorScheme.tertiary,
                     ),
                     child: Icon(
-                      Icons.arrow_back,
+                      SmartAttendIcons.arrowLeft,
                       color: context.colorScheme.onSurfaceVariant,
+                      size: 16,
                     ),
                   ),
                 ),
