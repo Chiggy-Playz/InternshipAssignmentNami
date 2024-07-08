@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/courses/providers.dart';
 import 'package:nami_assignment/style/icons.dart';
-import 'package:nami_assignment/style/theme.dart';
 import 'package:nami_assignment/widgets/appbar.dart' as appbar;
 import 'package:nami_assignment/widgets/buttons.dart' as buttons;
 
@@ -60,12 +59,6 @@ class _CoursesPageState extends ConsumerState<CoursesPage> {
                       itemCount: courses.length,
                       itemBuilder: (context, index) {
                         final course = courses[index];
-                        final titleTextWidget = Text(
-                          course.name,
-                          style: context.textTheme.bodyMedium!.copyWith(
-                            color: context.colorScheme.onSurface,
-                          ),
-                        );
                         return ListTile(
                           title: Row(
                             children: [
