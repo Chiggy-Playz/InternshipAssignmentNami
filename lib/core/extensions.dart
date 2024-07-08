@@ -38,9 +38,18 @@ extension BuildContextExtensions on BuildContext {
 
 final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
 final DateFormat dateTimeFormat = DateFormat('yyyy-MM-dd HH:mm:ss');
+// 12 June 2021 format
+final DateFormat ddMmYyyyFormat = DateFormat('dd MMMM yyyy');
+final DateFormat weekday = DateFormat('EEEE');
 
 extension DateTimeExtensions on DateTime {
   String toFormattedString() {
     return dateTimeFormat.format(this);
   }
+
+  String toDdMmmYyyy() {
+    return ddMmYyyyFormat.format(this);
+  }
+
+  String get weekdayName => weekday.format(this);
 }

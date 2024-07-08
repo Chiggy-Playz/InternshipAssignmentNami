@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide AppBar;
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/login/providers.dart';
 
 class AppBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -13,11 +14,34 @@ class AppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
+
     // The double AppBar is intentional
     // The first one acts as a padding which pushes the second one down
     // The second one is the actual AppBar
     return material.AppBar(
+      automaticallyImplyLeading: false,
       bottom: material.AppBar(
+        automaticallyImplyLeading: false,
+        leading: parentRoute?.impliesAppBarDismissal ?? false
+            ? Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(8.0),
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: context.colorScheme.tertiary,
+                    ),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: context.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+              )
+            : null,
         title: Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: title,

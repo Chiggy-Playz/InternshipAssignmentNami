@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:nami_assignment/modules/courses/providers.dart';
 import 'package:nami_assignment/modules/login/providers.dart';
+import 'package:nami_assignment/pages/course_details.dart';
 import 'package:nami_assignment/pages/courses.dart';
 import 'package:nami_assignment/pages/login.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -17,7 +19,7 @@ Future<GoRouter> router(RouterRef ref) async {
       if (authHandler == null) {
         return '/login';
       }
-      return '/courses';
+      return null;
     },
     routes: [
       GoRoute(
@@ -30,6 +32,19 @@ Future<GoRouter> router(RouterRef ref) async {
         name: CoursesPage.routeName,
         builder: (context, state) => const CoursesPage(),
       ),
+      GoRoute(
+          path: CourseDetailsPage.routePath,
+          name: CourseDetailsPage.routeName,
+          builder: (context, state) {
+            // Provider can't return null as the user must need
+            // the courses list in order to navigate to details
+            final courses = ref.read(coursesProvider).value!;
+            final course = courses
+                .where((course) => course.name == state.pathParameters["name"])
+                .first;
+
+            return CourseDetailsPage(course: course);
+          }),
     ],
   );
 }

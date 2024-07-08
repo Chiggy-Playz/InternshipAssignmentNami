@@ -11,3 +11,13 @@ class CourseModel {
     this.attendanceMarked = false,
   });
 }
+
+class CourseAttendance {
+  final DateTime date;
+  final bool isPresent;
+
+  CourseAttendance({
+    required this.date,
+    required this.isPresent,
+  });
+}

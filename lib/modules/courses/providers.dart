@@ -19,3 +19,31 @@ Future<List<CourseModel>> courses(CoursesRef ref) async {
     CourseModel(name: "NEN 100", location: "LH 121", time: "03:00 PM"),
   ];
 }
+
+@riverpod
+Future<List<CourseAttendance>> courseAttendance(CourseAttendanceRef ref) async {
+  await Future.delayed(const Duration(milliseconds: 500));
+
+  final now = DateTime.now();
+
+  return List.generate(
+    7,
+    (index) {
+      // Generate random attendance for each day except weekends
+      // Classes are held from Monday to Friday
+      // So, we don't need to generate attendance for Saturday and Sunday
+
+      final date = now.subtract(Duration(days: index));
+
+      if (date.weekday == DateTime.saturday ||
+          date.weekday == DateTime.sunday) {
+        return null;
+      }
+
+      return CourseAttendance(
+        date: date,
+        isPresent: index != 4,
+      );
+    },
+  ).whereType<CourseAttendance>().toList();
+}

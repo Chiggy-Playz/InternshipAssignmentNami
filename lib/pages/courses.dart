@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/courses/providers.dart';
+import 'package:nami_assignment/pages/course_details.dart';
 import 'package:nami_assignment/style/icons.dart';
 import 'package:nami_assignment/widgets/appbar.dart' as appbar;
 import 'package:nami_assignment/widgets/buttons.dart' as buttons;
@@ -80,6 +82,12 @@ class _CoursesPageState extends ConsumerState<CoursesPage> {
                           tileColor: course.attendanceMarked
                               ? context.customColors.successContainer
                               : null,
+                          onTap: () {
+                            context.pushNamed(
+                              CourseDetailsPage.routeName,
+                              pathParameters: {"name": course.name},
+                            );
+                          },
                         );
                       },
                       separatorBuilder: (context, index) => const SizedBox(

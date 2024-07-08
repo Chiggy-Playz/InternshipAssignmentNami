@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 ThemeData lightTheme = ThemeData.light().copyWith(
   colorScheme: ColorScheme.fromSeed(
     seedColor: const Color(0xFFE43E3A),
     primary: const Color(0xFFE43E3A),
+    tertiary: const Color(0xFFDADADA),
   ),
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: const AppBarTheme(
@@ -50,6 +52,18 @@ ThemeData lightTheme = ThemeData.light().copyWith(
         width: 1,
       ),
     ),
+  ),
+  chipTheme: const ChipThemeData(
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+        side: BorderSide(
+          color: Colors.black,
+          width: 1,
+        )),
+  ),
+  menuTheme: const MenuThemeData(
+    style: MenuStyle(backgroundColor: WidgetStatePropertyAll(Colors.white)),
   ),
   extensions: [
     CustomColors(
