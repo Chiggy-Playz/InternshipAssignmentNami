@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/courses/models.dart';
 import 'package:nami_assignment/modules/courses/providers.dart';
+import 'package:nami_assignment/pages/face_detection.dart';
 import 'package:nami_assignment/style/icons.dart';
 import 'package:nami_assignment/widgets/appbar.dart' as appbar;
 import 'package:nami_assignment/widgets/buttons.dart' as buttons;
@@ -74,7 +76,9 @@ class _CourseDetailsPageState extends ConsumerState<CourseDetailsPage> {
             ),
             const SizedBox(height: 32),
             buttons.FilledButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push(FaceDetectionPage.routePath);
+              },
               child: Text(
                 "Mark Attendance",
                 style: context.textTheme.bodyLarge!.copyWith(
@@ -105,6 +109,7 @@ class _CourseDetailsPageState extends ConsumerState<CourseDetailsPage> {
                 ),
               ],
             ),
+            const SizedBox(height: 16),
             ref.watch(courseAttendanceProvider).when(
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),

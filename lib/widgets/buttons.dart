@@ -11,20 +11,24 @@ class FilledButton extends StatelessWidget {
   });
 
   final Widget child;
-  final FutureOr Function() onPressed;
+  final FutureOr Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 60,
-      decoration: BoxDecoration(boxShadow: [
-        BoxShadow(
-          color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-          blurRadius: 12,
-          offset: const Offset(0, 7),
-        ),
-      ]),
+      decoration: BoxDecoration(
+          boxShadow: onPressed == null
+              ? []
+              : [
+                  BoxShadow(
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.4),
+                    blurRadius: 12,
+                    offset: const Offset(0, 7),
+                  ),
+                ]),
       child: material.FilledButton(
         onPressed: onPressed,
         child: child,
@@ -49,9 +53,7 @@ class OutlinedButton extends StatelessWidget {
       width: double.infinity,
       height: 60,
       child: material.OutlinedButton(
-        style: ButtonStyle(
-          
-        ),
+        style: const ButtonStyle(),
         onPressed: onPressed,
         child: child,
       ),

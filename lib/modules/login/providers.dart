@@ -1,5 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:nami_assignment/core/router.dart';
 import 'package:nami_assignment/modules/login/models.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -31,8 +29,5 @@ class AuthHandler extends _$AuthHandler {
               'https://en.gravatar.com/avatar/ea8be10248440badd05ded1b216a7492?s=1024' // Me =D
           ),
     );
-
-    // Should cause a rebuild of the router
-    ref.invalidate(routerProvider);
   }
 }
