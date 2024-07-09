@@ -29,7 +29,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       animationController = AnimationController(
         vsync: this,
-        duration: const Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 800),
       );
 
       animation = Tween<double>(begin: 0, end: 1).animate(
