@@ -16,7 +16,38 @@ class VerificationPage extends ConsumerStatefulWidget {
       _VerificationPageState();
 }
 
-class _VerificationPageState extends ConsumerState<VerificationPage> {
+class _VerificationPageState extends ConsumerState<VerificationPage>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
+  Animation<double>? animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      animationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 800),
+      );
+
+      animation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+          parent: animationController!,
+          curve: Curves.easeOut,
+        ),
+      );
+      setState(() {});
+      animationController!.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,37 +57,59 @@ class _VerificationPageState extends ConsumerState<VerificationPage> {
           child: Column(
             children: [
               const SizedBox(height: 160),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Please enter code given by professor",
-                  style: context.textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.bold,
+              if (animationController != null)
+                AnimatedBuilder(
+                  animation: animationController!,
+                  builder: (context, child) {
+                    return Transform(
+                      transform: Matrix4.translationValues(
+                        0.0,
+                        MediaQuery.of(context).size.height *
+                            (1 - animation!.value),
+                        0.0,
+                      ),
+                      child: child,
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Please enter code given by professor",
+                          style: context.textTheme.titleSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          hintText: 'Enter Code',
+                          labelText: 'Enter Code',
+                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      buttons.FilledButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Submit',
+                          style: context.textTheme.titleSmall!.copyWith(
+                            color: context.colorScheme.onPrimary,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter Code',
-                  labelText: 'Enter Code',
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                ),
-              ),
-              const SizedBox(height: 32),
-              buttons.FilledButton(
-                onPressed: () {},
-                child: Text(
-                  'Submit',
-                  style: context.textTheme.titleSmall!.copyWith(
-                    color: context.colorScheme.onPrimary,
-                  ),
-                ),
-              ),
               const Expanded(child: SizedBox()),
-              Text(
-                "Powered by Lucify",
-                style: context.textTheme.bodyMedium,
+              Center(
+                child: Text(
+                  "Powered by Lucify",
+                  style: context.textTheme.bodyMedium,
+                ),
               ),
             ],
           ),

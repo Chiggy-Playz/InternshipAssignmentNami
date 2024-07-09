@@ -94,7 +94,7 @@ Future<GoRouter> router(RouterRef ref) async {
         path: FaceDetectionPage.routePath,
         name: FaceDetectionPage.routeName,
         pageBuilder: (context, state) {
-          // Page should come from left to right
+          // Page should come from right to left
 
           return CustomTransitionPage(
             child: const FaceDetectionPage(),
@@ -112,10 +112,24 @@ Future<GoRouter> router(RouterRef ref) async {
         },
       ),
       GoRoute(
-        path: VerificationPage.routePath,
-        name: VerificationPage.routeName,
-        builder: (context, state) => const VerificationPage(),
-      )
+          path: VerificationPage.routePath,
+          name: VerificationPage.routeName,
+          pageBuilder: (context, state) {
+            // Page should come from right to left
+            return CustomTransitionPage(
+              child: const VerificationPage(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(1, 0),
+                    end: const Offset(0, 0),
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+            );
+          })
     ],
   );
 }
