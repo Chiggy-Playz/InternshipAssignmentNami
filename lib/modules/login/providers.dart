@@ -11,7 +11,7 @@ class AuthHandler extends _$AuthHandler {
     // But thats out of the scope for this assignment
     // So we will just return null in beginning
 
-    return state.value;
+    return null;
   }
 
   Future<void> login(String email, String password) async {

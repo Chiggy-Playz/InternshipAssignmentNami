@@ -7,6 +7,7 @@ import 'package:nami_assignment/pages/course_details.dart';
 import 'package:nami_assignment/pages/courses.dart';
 import 'package:nami_assignment/pages/face_detection.dart';
 import 'package:nami_assignment/pages/login.dart';
+import 'package:nami_assignment/pages/splash_screen.dart';
 import 'package:nami_assignment/pages/verification.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -15,6 +16,7 @@ part 'router.g.dart';
 @riverpod
 Future<GoRouter> router(RouterRef ref) async {
   final isAuth = ValueNotifier<AsyncValue<UserModel>>(const AsyncLoading());
+  bool splashed = false;
   ref
     ..onDispose(isAuth.dispose)
     ..listen(
@@ -30,8 +32,13 @@ Future<GoRouter> router(RouterRef ref) async {
     );
 
   return GoRouter(
-    initialLocation: '/courses',
+    initialLocation: SplashScreenPage.routePath,
     redirect: (context, state) {
+      if (!splashed) {
+        splashed = true;
+        return SplashScreenPage.routePath;
+      }
+
       if (isAuth.value.isLoading) return LoginPage.routePath;
 
       final auth = isAuth.value.value;
@@ -42,6 +49,11 @@ Future<GoRouter> router(RouterRef ref) async {
     },
     refreshListenable: isAuth,
     routes: [
+      GoRoute(
+        path: SplashScreenPage.routePath,
+        name: SplashScreenPage.routeName,
+        builder: (context, state) => const SplashScreenPage(),
+      ),
       GoRoute(
         path: LoginPage.routePath,
         name: LoginPage.routeName,
