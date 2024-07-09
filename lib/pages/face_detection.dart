@@ -308,7 +308,8 @@ class _PreviewEllipseOverlay extends ConsumerState<PreviewEllipseOverlay> {
           color: Colors.white,
           strokeWidth: 2,
           dashPattern: const [8, 8],
-          child: Container(
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 1000),
             decoration: BoxDecoration(
               border: Border.all(
                 style: BorderStyle.none,
@@ -351,12 +352,18 @@ class _PreviewProgressOverlayState
             color: Colors.black.withOpacity(0.3)),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: LinearProgressIndicator(
-            value: (5 - timerCount) / 5,
-            backgroundColor: Colors.white.withOpacity(0.3),
-            valueColor: AlwaysStoppedAnimation(context.colorScheme.primary),
-            minHeight: 20,
-            borderRadius: BorderRadius.circular(8),
+          child: TweenAnimationBuilder(
+            duration: const Duration(milliseconds: 1000),
+            tween: Tween<double>(begin: 0, end: (5 - timerCount) / 5),
+            builder: (context, value, child) {
+              return LinearProgressIndicator(
+                value: value,
+                backgroundColor: Colors.white.withOpacity(0.3),
+                valueColor: AlwaysStoppedAnimation(context.colorScheme.primary),
+                minHeight: 20,
+                borderRadius: BorderRadius.circular(8),
+              );
+            },
           ),
         ),
       ),
