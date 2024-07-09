@@ -26,6 +26,16 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
   // I'm sorry its 2am and i cant think straight 😭
   double moveUp = 0.0;
 
+  // Durations
+  Duration whiteBoxDuration = const Duration(milliseconds: 500);
+  Duration imageSizeDuration = const Duration(milliseconds: 800);
+  Duration textDuration = const Duration(milliseconds: 500);
+
+  // Curves
+  Curve whiteBoxCurve = Curves.easeOutSine;
+  Curve imageSizeCurve = Curves.easeOutQuad;
+  Curve textCurve = Curves.easeOutSine;
+
   Animation? scaffoldBackgroundAnimation;
   AnimationController? scaffoldBackgroundController;
 
@@ -33,50 +43,63 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      scaffoldBackgroundController = AnimationController(
-        vsync: this,
-        duration: const Duration(milliseconds: 1000),
-      );
-
-      scaffoldBackgroundAnimation = ColorTween(
-        begin: context.colorScheme.primary,
-        end: Colors.white,
-      ).animate(scaffoldBackgroundController!)
-        ..addListener(() {
-          setState(() {});
-        });
-
-      await Future.delayed(const Duration(milliseconds: 1000));
-      setState(() {
-        whiteBoxSize = 128;
-      });
-      await Future.delayed(const Duration(milliseconds: 1000 + 100));
-      setState(() {
-        imageSize = 128;
-      });
-      await Future.delayed(const Duration(milliseconds: 1000 + 100));
-      setState(() {
-        textOpacity = 1.0;
-      });
-      await Future.delayed(const Duration(milliseconds: 1000 + 100));
-
-      setState(() {
-        scaffoldColor = Colors.white;
-        textColor = context.colorScheme.primary;
-        moveUp = 290;
-      });
-      scaffoldBackgroundController!.forward();
-      await Future.delayed(const Duration(milliseconds: 1000 + 100));
-      if (!mounted) return;
-      context.go(LoginPage.routePath);
-    });
+    WidgetsBinding.instance.addPostFrameCallback(animate);
   }
 
   @override
   void dispose() {
     scaffoldBackgroundController!.dispose();
     super.dispose();
+  }
+
+  Future<void> animate(_) async {
+    scaffoldBackgroundController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    scaffoldBackgroundAnimation = ColorTween(
+      begin: context.colorScheme.primary,
+      end: Colors.white,
+    ).animate(scaffoldBackgroundController!)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    setState(() {
+      whiteBoxSize = 128;
+    });
+    await Future.delayed(whiteBoxDuration - const Duration(milliseconds: 100));
+    setState(() {
+      imageSize = 128;
+    });
+    await Future.delayed(imageSizeDuration);
+    setState(() {
+      textOpacity = 1.0;
+    });
+    await Future.delayed(textDuration);
+
+    // Before moving the things up, set curves and durations same so there is no mismatch
+
+    setState(() {
+      whiteBoxCurve = Curves.easeOutQuad;
+      imageSizeCurve = Curves.easeOutQuad;
+      textCurve = Curves.easeOutQuad;
+
+      whiteBoxDuration = const Duration(milliseconds: 1000);
+      imageSizeDuration = const Duration(milliseconds: 1000);
+      textDuration = const Duration(milliseconds: 1000);
+    });
+
+    setState(() {
+      scaffoldColor = Colors.white;
+      textColor = context.colorScheme.primary;
+      moveUp = 290;
+    });
+    scaffoldBackgroundController!.forward();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    if (!mounted) return;
+    context.go(LoginPage.routePath);
   }
 
   @override
@@ -87,13 +110,15 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
       body: Stack(
         children: [
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 1000),
+            duration: whiteBoxDuration,
+            curve: whiteBoxCurve,
             top: MediaQuery.of(context).size.height * 0.5 -
                 whiteBoxSize / 2 -
                 moveUp,
             left: MediaQuery.of(context).size.width * 0.5 - whiteBoxSize / 2,
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 1000),
+              duration: whiteBoxDuration,
+              curve: whiteBoxCurve,
               width: whiteBoxSize,
               height: whiteBoxSize,
               decoration: BoxDecoration(
@@ -110,13 +135,15 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
             ),
           ),
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 1000),
+            duration: imageSizeDuration,
+            curve: imageSizeCurve,
             top: MediaQuery.of(context).size.height * 0.5 -
                 imageSize / 2 -
                 moveUp,
             left: MediaQuery.of(context).size.width * 0.5 - imageSize / 2,
             child: AnimatedContainer(
-              duration: const Duration(milliseconds: 1000),
+              curve: imageSizeCurve,
+              duration: imageSizeDuration,
               width: imageSize,
               height: imageSize,
               child: Center(
@@ -129,7 +156,8 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
             ),
           ),
           AnimatedPositioned(
-            duration: const Duration(milliseconds: 1000),
+            duration: textDuration,
+            curve: textCurve,
             top: MediaQuery.of(context).size.height * 0.5 +
                 whiteBoxSize / 2 -
                 moveUp,
@@ -138,10 +166,12 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
               padding: const EdgeInsets.all(16.0),
               child: AnimatedOpacity(
                 opacity: textOpacity,
-                duration: const Duration(milliseconds: 1000),
+                duration: textDuration,
+                curve: textCurve,
                 child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 1000),
-                  style: context.textTheme.headlineMedium!.copyWith(
+                  duration: textDuration,
+                  curve: textCurve,
+                  style: context.textTheme.headlineLarge!.copyWith(
                     color: textColor ?? context.colorScheme.onPrimary,
                     fontWeight: FontWeight.w500,
                   ),
