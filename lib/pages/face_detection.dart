@@ -58,7 +58,7 @@ class _FaceDetectionPageState extends ConsumerState<FaceDetectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const appbar.AppBar(),
+      appBar: appbar.AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -33,7 +33,7 @@ class _CourseDetailsPageState extends ConsumerState<CourseDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const appbar.AppBar(),
+      appBar: appbar.AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -75,15 +75,18 @@ class _CourseDetailsPageState extends ConsumerState<CourseDetailsPage> {
               ],
             ),
             const SizedBox(height: 32),
-            buttons.FilledButton(
-              onPressed: () {
-                context.push(FaceDetectionPage.routePath);
-              },
-              child: Text(
-                "Mark Attendance",
-                style: context.textTheme.bodyLarge!.copyWith(
-                  color: context.colorScheme.onPrimary,
-                  fontWeight: FontWeight.w500,
+            Hero(
+              tag: "MarkAttendanceButton",
+              child: buttons.FilledButton(
+                onPressed: () {
+                  context.push(FaceDetectionPage.routePath);
+                },
+                child: Text(
+                  "Mark Attendance",
+                  style: context.textTheme.bodyLarge!.copyWith(
+                    color: context.colorScheme.onPrimary,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ),

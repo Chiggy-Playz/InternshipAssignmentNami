@@ -29,6 +29,14 @@ class AuthHandler extends _$AuthHandler {
               'https://en.gravatar.com/avatar/ea8be10248440badd05ded1b216a7492?s=1024' // Me =D
           ),
     );
-    
+  }
+
+  Future<void> signOut() async {
+    // This is where you would call the API to logout
+    // But thats out of the scope for this assignment
+    // So we'll just set the user to null
+
+    await Future.delayed(const Duration(milliseconds: 500));
+    state = const AsyncData(null);
   }
 }

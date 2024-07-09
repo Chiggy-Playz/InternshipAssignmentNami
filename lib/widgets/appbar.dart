@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart' hide AppBar;
 import 'package:flutter/material.dart' as material;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/login/providers.dart';
+import 'package:nami_assignment/pages/login.dart';
 import 'package:nami_assignment/style/icons.dart';
 
 class AppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const AppBar({
+  AppBar({
     super.key,
     this.title,
+    this.opacity,
   });
 
   final Widget? title;
+  double? opacity;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +24,7 @@ class AppBar extends ConsumerWidget implements PreferredSizeWidget {
     // The double AppBar is intentional
     // The first one acts as a padding which pushes the second one down
     // The second one is the actual AppBar
-    return material.AppBar(
+    final appbar = material.AppBar(
       automaticallyImplyLeading: false,
       bottom: material.AppBar(
         automaticallyImplyLeading: false,
@@ -56,10 +60,16 @@ class AppBar extends ConsumerWidget implements PreferredSizeWidget {
             return [
               Padding(
                 padding: const EdgeInsets.only(right: 16.0),
-                child: CircleAvatar(
-                  backgroundImage: user.imageUrl != null
-                      ? NetworkImage(user.imageUrl!)
-                      : null,
+                child: InkWell(
+                  onTap: () {
+                    ref.read(authHandlerProvider.notifier).signOut();
+                    context.go(LoginPage.routePath);
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: user.imageUrl != null
+                        ? NetworkImage(user.imageUrl!)
+                        : null,
+                  ),
                 ),
               ),
             ];
@@ -67,6 +77,16 @@ class AppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ),
     );
+
+    if (opacity != null) {
+      return AnimatedOpacity(
+        duration: const Duration(milliseconds: 800),
+        opacity: opacity!,
+        child: appbar,
+      );
+    }
+
+    return appbar;
   }
 
   // This is required for the AppBar to work

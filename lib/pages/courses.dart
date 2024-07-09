@@ -20,7 +20,44 @@ class CoursesPage extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _CoursesPageState();
 }
 
-class _CoursesPageState extends ConsumerState<CoursesPage> {
+class _CoursesPageState extends ConsumerState<CoursesPage>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
+  Animation<double>? animation;
+
+  double opacity = 0.0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      animationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 800),
+      );
+
+      animation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+          parent: animationController!,
+          curve: Curves.easeOut,
+        ),
+      );
+
+      setState(() {
+        opacity = 1.0;
+      });
+
+      animationController!.forward();
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,6 +69,7 @@ class _CoursesPageState extends ConsumerState<CoursesPage> {
             fontWeight: FontWeight.w500,
           ),
         ),
+        opacity: opacity,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -40,73 +78,110 @@ class _CoursesPageState extends ConsumerState<CoursesPage> {
             const SizedBox(
               height: 64,
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                "Courses List",
-                style: context.textTheme.headlineSmall!.copyWith(
-                  color: context.colorScheme.onSurface,
-                  fontWeight: FontWeight.bold,
+            AnimatedOpacity(
+              duration: const Duration(milliseconds: 800),
+              opacity: opacity,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Courses List",
+                  style: context.textTheme.headlineSmall!.copyWith(
+                    color: context.colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
             const SizedBox(height: 32),
-            ref.watch(coursesProvider).when(
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator()),
-                  error: (error, stackTrace) => Text("Error: $error"),
-                  data: (courses) {
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: courses.length,
-                      itemBuilder: (context, index) {
-                        final course = courses[index];
-                        return ListTile(
-                          title: Row(
-                            children: [
-                              Text(
-                                course.name,
-                                style: context.textTheme.bodyLarge!.copyWith(
-                                  color: context.colorScheme.onSurface,
-                                  fontWeight: FontWeight.bold,
-                                ),
+            if (animationController != null)
+              AnimatedBuilder(
+                animation: animationController!,
+                builder: (context, child) {
+                  return Transform(
+                    transform: Matrix4.translationValues(
+                      (1 - animation!.value) *
+                          (MediaQuery.of(context).size.width),
+                      0,
+                      0,
+                    ),
+                    child: child,
+                  );
+                },
+                child: ref.watch(coursesProvider).when(
+                      loading: () => const SizedBox(),
+                      error: (error, stackTrace) => Text("Error: $error"),
+                      data: (courses) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: courses.length,
+                          itemBuilder: (context, index) {
+                            final course = courses[index];
+                            return ListTile(
+                              title: Row(
+                                children: [
+                                  Text(
+                                    course.name,
+                                    style:
+                                        context.textTheme.bodyLarge!.copyWith(
+                                      color: context.colorScheme.onSurface,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  if (course.attendanceMarked)
+                                    Icon(
+                                      SmartAttendIcons.tickMark,
+                                      color: context.customColors.success,
+                                    )
+                                ],
                               ),
-                              const SizedBox(width: 8.0),
-                              if (course.attendanceMarked)
-                                Icon(
-                                  SmartAttendIcons.tickMark,
-                                  color: context.customColors.success,
-                                )
-                            ],
-                          ),
-                          tileColor: course.attendanceMarked
-                              ? context.customColors.successContainer
-                              : null,
-                          onTap: () {
-                            context.pushNamed(
-                              CourseDetailsPage.routeName,
-                              pathParameters: {"name": course.name},
+                              tileColor: course.attendanceMarked
+                                  ? context.customColors.successContainer
+                                  : null,
+                              onTap: () {
+                                context.pushNamed(
+                                  CourseDetailsPage.routeName,
+                                  pathParameters: {"name": course.name},
+                                );
+                              },
                             );
                           },
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 16.0,
+                          ),
                         );
                       },
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 16.0,
-                      ),
-                    );
-                  },
-                ),
+                    ),
+              ),
             const Expanded(child: SizedBox()),
-            buttons.FilledButton(
-              child: Text(
-                "Mark Attendance",
-                style: context.textTheme.bodyLarge!.copyWith(
-                  color: context.colorScheme.onPrimary,
-                  fontWeight: FontWeight.w500,
+            if (animationController != null)
+              AnimatedBuilder(
+                animation: animationController!,
+                builder: (context, child) {
+                  return Transform(
+                    transform: Matrix4.translationValues(
+                      0,
+                      (1 - animation!.value) *
+                          (MediaQuery.of(context).size.height),
+                      0,
+                    ),
+                    child: child,
+                  );
+                },
+                child: Hero(
+                  tag: "MarkAttendanceButton",
+                  child: buttons.FilledButton(
+                    child: Text(
+                      "Mark Attendance",
+                      style: context.textTheme.bodyLarge!.copyWith(
+                        color: context.colorScheme.onPrimary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    onPressed: () {},
+                  ),
                 ),
               ),
-              onPressed: () {},
-            ),
             const SizedBox(height: 32),
             Text(
               "Powered by Lucify",

@@ -20,7 +20,7 @@ class _VerificationPageState extends ConsumerState<VerificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const appbar.AppBar(),
+        appBar: appbar.AppBar(),
         body: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(

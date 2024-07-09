@@ -62,7 +62,19 @@ Future<GoRouter> router(RouterRef ref) async {
       GoRoute(
         path: CoursesPage.routePath,
         name: CoursesPage.routeName,
-        builder: (context, state) => const CoursesPage(),
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+            child: const CoursesPage(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeTransition(
+                opacity:
+                    CurveTween(curve: Curves.easeInOutCirc).animate(animation),
+                child: child,
+              );
+            },
+          );
+        },
       ),
       GoRoute(
         path: CourseDetailsPage.routePath,

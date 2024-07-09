@@ -5,7 +5,8 @@ part 'providers.g.dart';
 
 @riverpod
 Future<List<CourseModel>> courses(CoursesRef ref) async {
-  await Future.delayed(const Duration(milliseconds: 500));
+  // Simulate network delay
+  await Future.delayed(Duration.zero);
   return [
     CourseModel(name: "MTL 100", location: "LH 121", time: "11:00 AM"),
     CourseModel(name: "PYL 100", location: "LH 121", time: "12:00 PM"),
@@ -22,7 +23,8 @@ Future<List<CourseModel>> courses(CoursesRef ref) async {
 
 @riverpod
 Future<List<CourseAttendance>> courseAttendance(CourseAttendanceRef ref) async {
-  await Future.delayed(const Duration(milliseconds: 500));
+  // Simulate network delay
+  await Future.delayed(Duration.zero);
 
   final now = DateTime.now();
 
