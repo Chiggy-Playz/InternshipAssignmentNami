@@ -5,6 +5,7 @@ import 'package:nami_assignment/pages/course_details.dart';
 import 'package:nami_assignment/pages/courses.dart';
 import 'package:nami_assignment/pages/face_detection.dart';
 import 'package:nami_assignment/pages/login.dart';
+import 'package:nami_assignment/pages/verification.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'router.g.dart';
@@ -51,6 +52,11 @@ Future<GoRouter> router(RouterRef ref) async {
         name: FaceDetectionPage.routeName,
         builder: (context, state) => const FaceDetectionPage(),
       ),
+      GoRoute(
+        path: VerificationPage.routePath,
+        name: VerificationPage.routeName,
+        builder: (context, state) => const VerificationPage(),
+      )
     ],
   );
 }

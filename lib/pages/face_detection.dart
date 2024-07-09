@@ -6,9 +6,11 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/face_detection/providers.dart';
+import 'package:nami_assignment/pages/verification.dart';
 import 'package:nami_assignment/widgets/appbar.dart' as appbar;
 import 'package:nami_assignment/widgets/buttons.dart' as buttons;
 
@@ -263,7 +265,7 @@ class _FaceDetectionContinuedState
         buttons.FilledButton(
           onPressed: timerCount == 0
               ? () {
-                  context.showSnackBar("Face captured");
+                  context.push(VerificationPage.routePath);
                 }
               : null,
           child: Text(
