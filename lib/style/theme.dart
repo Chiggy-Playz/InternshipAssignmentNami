@@ -65,6 +65,7 @@ ThemeData lightTheme = ThemeData.light().copyWith(
   menuTheme: const MenuThemeData(
     style: MenuStyle(backgroundColor: WidgetStatePropertyAll(Colors.white)),
   ),
+  dialogBackgroundColor: Colors.white,
   extensions: [
     CustomColors(
       success: successColor.value,

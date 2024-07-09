@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -263,7 +264,7 @@ class _FaceDetectionContinuedState
         ),
         const SizedBox(height: 16.0),
         buttons.FilledButton(
-          onPressed: timerCount == 0
+          onPressed: kDebugMode || timerCount == 0
               ? () {
                   context.push(VerificationPage.routePath);
                 }

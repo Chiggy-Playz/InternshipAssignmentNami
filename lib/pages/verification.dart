@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:nami_assignment/core/extensions.dart';
+import 'package:nami_assignment/style/icons.dart';
 import 'package:nami_assignment/widgets/appbar.dart' as appbar;
 import 'package:nami_assignment/widgets/buttons.dart' as buttons;
 
@@ -93,7 +94,7 @@ class _VerificationPageState extends ConsumerState<VerificationPage>
                       ),
                       const SizedBox(height: 32),
                       buttons.FilledButton(
-                        onPressed: () {},
+                        onPressed: showSubmissionDialog,
                         child: Text(
                           'Submit',
                           style: context.textTheme.titleSmall!.copyWith(
@@ -114,5 +115,48 @@ class _VerificationPageState extends ConsumerState<VerificationPage>
             ],
           ),
         ));
+  }
+
+  void showSubmissionDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          icon: Icon(
+            SmartAttendIcons.tickMark,
+            color: context.customColors.success,
+            size: 64.0,
+          ),
+          content: SizedBox(
+            width: 200,
+            child: Text(
+              'Your attendance was successfully marked',
+              style: context.textTheme.titleMedium!.copyWith(
+                color: context.colorScheme.onSurface,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          actions: [
+            SizedBox(
+              width: 150,
+              child: buttons.FilledButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Done',
+                  style: context.textTheme.titleSmall!.copyWith(
+                    color: context.colorScheme.onPrimary,
+                  ),
+                ),
+              ),
+            )
+          ],
+          actionsAlignment: MainAxisAlignment.center,
+        );
+      },
+    );
   }
 }
