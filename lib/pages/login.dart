@@ -17,7 +17,40 @@ class LoginPage extends ConsumerStatefulWidget {
   ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage>
+    with TickerProviderStateMixin {
+  AnimationController? animationController;
+  Animation<double>? animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      animationController = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 500),
+      );
+
+      animation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(
+          parent: animationController!,
+          curve: Curves.easeInOutBack,
+        ),
+      );
+
+      // Start the animation
+      animationController!.forward();
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    animationController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,62 +74,83 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               ),
             ),
             const Expanded(child: SizedBox()),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: "Your ID",
-                hintText: "Your ID",
-                prefixIcon: SizedBox(),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-              ),
-            ),
-            const SizedBox(height: 32),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: "Password",
-                hintText: "Password",
-                prefixIcon: SizedBox(),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-              ),
-            ),
-            const SizedBox(height: 32),
-            buttons.FilledButton(
-              child: Text(
-                "Log in",
-                style: context.textTheme.bodyLarge!.copyWith(
-                    color: context.colorScheme.onPrimary,
-                    fontWeight: FontWeight.w500),
-              ),
-              onPressed: () async {
-                final authHandler = ref.read(authHandlerProvider.notifier);
+            if (animation != null)
+              AnimatedBuilder(
+                animation: animationController!,
+                builder: (context, child) {
+                  return Transform(
+                    transform: Matrix4.translationValues(
+                      0,
+                      (1 - animation!.value) *
+                          (MediaQuery.of(context).size.height * 0.6),
+                      0,
+                    ),
+                    child: child,
+                  );
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Your ID",
+                        hintText: "Your ID",
+                        prefixIcon: SizedBox(),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Password",
+                        hintText: "Password",
+                        prefixIcon: SizedBox(),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    buttons.FilledButton(
+                      child: Text(
+                        "Log in",
+                        style: context.textTheme.bodyLarge!.copyWith(
+                            color: context.colorScheme.onPrimary,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      onPressed: () async {
+                        final authHandler =
+                            ref.read(authHandlerProvider.notifier);
 
-                // Replace the empty strings with the actual ID and password
-                // After validating above form fields
-                await authHandler.login("", "");
-                if (!context.mounted) return;
-                context.go(CoursesPage.routePath);
-              },
-            ),
-            const SizedBox(height: 32),
-            TextButton(
-              onPressed: () {},
-              child: Text(
-                "Forgot Password",
-                style: context.textTheme.titleMedium!.copyWith(
-                  color: context.colorScheme.onSurface,
+                        // Replace the empty strings with the actual ID and password
+                        // After validating above form fields
+                        await authHandler.login("", "");
+                        if (!context.mounted) return;
+                        context.go(CoursesPage.routePath);
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        "Forgot Password",
+                        style: context.textTheme.titleMedium!.copyWith(
+                          color: context.colorScheme.onSurface,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    buttons.OutlinedButton(
+                      child: Text(
+                        "Create new account",
+                        style: context.textTheme.bodyLarge!.copyWith(
+                          color: context.colorScheme.onSurface,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const SizedBox(height: 32),
-            buttons.OutlinedButton(
-              child: Text(
-                "Create new account",
-                style: context.textTheme.bodyLarge!.copyWith(
-                  color: context.colorScheme.onSurface,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              onPressed: () {},
-            ),
             const Expanded(child: SizedBox()),
             Text(
               "Powered by Lucify",
