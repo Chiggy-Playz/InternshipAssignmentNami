@@ -111,7 +111,7 @@ class _FaceDetectionPageState extends ConsumerState<FaceDetectionPage> {
     if (mounted && cameras.isEmpty) {
       context.showErrorSnackBar('No camera found');
     }
-    camera = cameras[0];
+    camera = cameras[1];
     controller = CameraController(
       camera!,
       ResolutionPreset.high,

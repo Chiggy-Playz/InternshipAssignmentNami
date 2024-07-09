@@ -44,7 +44,7 @@ Future<List<CourseAttendance>> courseAttendance(CourseAttendanceRef ref) async {
 
       return CourseAttendance(
         date: date,
-        isPresent: index != 4,
+        isPresent: date.day != 4,
       );
     },
   ).whereType<CourseAttendance>().toList();

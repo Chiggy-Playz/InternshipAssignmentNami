@@ -27,9 +27,9 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
   double moveUp = 0.0;
 
   // Durations
-  Duration whiteBoxDuration = const Duration(milliseconds: 500);
-  Duration imageSizeDuration = const Duration(milliseconds: 800);
-  Duration textDuration = const Duration(milliseconds: 500);
+  Duration whiteBoxDuration = const Duration(milliseconds: 1000);
+  Duration imageSizeDuration = const Duration(milliseconds: 1000);
+  Duration textDuration = const Duration(milliseconds: 1000);
 
   // Curves
   Curve whiteBoxCurve = Curves.easeOutSine;
