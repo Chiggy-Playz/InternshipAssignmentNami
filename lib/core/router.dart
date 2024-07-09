@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nami_assignment/modules/courses/providers.dart';
-import 'package:nami_assignment/modules/login/models.dart';
 import 'package:nami_assignment/modules/login/providers.dart';
 import 'package:nami_assignment/pages/course_details.dart';
 import 'package:nami_assignment/pages/courses.dart';
@@ -13,33 +11,16 @@ part 'router.g.dart';
 
 @riverpod
 Future<GoRouter> router(RouterRef ref) async {
-  final isAuth = ValueNotifier<AsyncValue<UserModel>>(const AsyncLoading());
-  ref
-    ..onDispose(isAuth.dispose)
-    ..listen(
-      authHandlerProvider.select(
-        (value) => value.whenData(
-          (value) => value,
-        ),
-      ),
-      (s, next) {
-        if (next.value == null) return;
-        isAuth.value = AsyncValue.data(next.value!);
-      },
-    );
+  final authHandler = await ref.watch(authHandlerProvider.future);
 
   return GoRouter(
     initialLocation: '/courses',
     redirect: (context, state) {
-      if (isAuth.value.isLoading) return LoginPage.routePath;
-
-      final auth = isAuth.value.value;
-
-      if (auth == null) return LoginPage.routePath;
-
+      if (authHandler == null) {
+        return '/login';
+      }
       return null;
     },
-    refreshListenable: isAuth,
     routes: [
       GoRoute(
         path: LoginPage.routePath,

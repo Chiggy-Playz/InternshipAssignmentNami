@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/modules/login/providers.dart';
-import 'package:nami_assignment/pages/courses.dart';
 import 'package:nami_assignment/widgets/smart_attend_logo.dart';
 import 'package:nami_assignment/widgets/buttons.dart' as buttons;
 
@@ -72,8 +70,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 // Replace the empty strings with the actual ID and password
                 // After validating above form fields
                 await authHandler.login("", "");
-                if (!context.mounted) return;
-                context.go(CoursesPage.routePath);
               },
             ),
             const SizedBox(height: 32),

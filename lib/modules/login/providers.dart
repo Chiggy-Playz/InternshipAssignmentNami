@@ -29,6 +29,5 @@ class AuthHandler extends _$AuthHandler {
               'https://en.gravatar.com/avatar/ea8be10248440badd05ded1b216a7492?s=1024' // Me =D
           ),
     );
-    
   }
 }
