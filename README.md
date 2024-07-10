@@ -28,3 +28,5 @@ The socket server code is available [here](https://github.com/Chiggy-Playz/Inter
 
 ## Screen Recording
 
+![SmartAttend](![https](https://github.com/Chiggy-Playz/InternshipAssignmentNamiNode/blob/main/SmartAttend.gif)
+
