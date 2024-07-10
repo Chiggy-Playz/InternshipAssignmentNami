@@ -70,7 +70,6 @@ class _LoginPageState extends ConsumerState<LoginPage>
               "SmartAttend",
               style: context.textTheme.headlineLarge!.copyWith(
                 color: context.colorScheme.primary,
-                fontWeight: FontWeight.w500,
               ),
             ),
             const Expanded(child: SizedBox()),
@@ -113,8 +112,9 @@ class _LoginPageState extends ConsumerState<LoginPage>
                       child: Text(
                         "Log in",
                         style: context.textTheme.bodyLarge!.copyWith(
-                            color: context.colorScheme.onPrimary,
-                            fontWeight: FontWeight.w500),
+                          color: context.colorScheme.onPrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       onPressed: () async {
                         final authHandler =
@@ -134,6 +134,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         "Forgot Password",
                         style: context.textTheme.titleMedium!.copyWith(
                           color: context.colorScheme.onSurface,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -143,7 +144,7 @@ class _LoginPageState extends ConsumerState<LoginPage>
                         "Create new account",
                         style: context.textTheme.bodyLarge!.copyWith(
                           color: context.colorScheme.onSurface,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       onPressed: () {},

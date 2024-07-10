@@ -264,7 +264,7 @@ class _FaceDetectionContinuedState
         ),
         const SizedBox(height: 16.0),
         buttons.FilledButton(
-          onPressed: kDebugMode || timerCount == 0
+          onPressed: true || timerCount == 0
               ? () {
                   context.push(VerificationPage.routePath);
                 }

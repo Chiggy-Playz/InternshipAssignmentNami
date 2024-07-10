@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 ThemeData lightTheme = ThemeData.light().copyWith(
   colorScheme: ColorScheme.fromSeed(
@@ -73,6 +73,37 @@ ThemeData lightTheme = ThemeData.light().copyWith(
     ),
   ],
 );
+
+ThemeData updateTextTheme(ThemeData baseTheme) {
+  final baseTextTheme = baseTheme.textTheme;
+
+  return baseTheme.copyWith(
+    textTheme: GoogleFonts.inriaSansTextTheme(lightTheme.textTheme).copyWith(
+      headlineLarge: baseTextTheme.headlineLarge!.copyWith(
+        fontFamily: "Segoe UI",
+        fontWeight: FontWeight.bold,
+      ),
+      titleLarge: baseTextTheme.titleLarge!.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
+      titleMedium: baseTextTheme.titleMedium!.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
+      titleSmall: baseTextTheme.titleSmall!.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
+      labelLarge: baseTextTheme.labelLarge!.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
+      labelMedium: baseTextTheme.labelMedium!.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
+      labelSmall: baseTextTheme.labelSmall!.copyWith(
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  );
+}
 
 @immutable
 class CustomColors extends ThemeExtension<CustomColors> {

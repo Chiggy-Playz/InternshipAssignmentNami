@@ -161,9 +161,9 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
             top: MediaQuery.of(context).size.height * 0.5 +
                 whiteBoxSize / 2 -
                 moveUp,
-            left: MediaQuery.of(context).size.width * 0.5 - 100 * textOpacity,
+            left: MediaQuery.of(context).size.width * 0.45 - 100 * textOpacity,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(24.0),
               child: AnimatedOpacity(
                 opacity: textOpacity,
                 duration: textDuration,
@@ -173,7 +173,6 @@ class SplashScreenPageState extends ConsumerState<SplashScreenPage>
                   curve: textCurve,
                   style: context.textTheme.headlineLarge!.copyWith(
                     color: textColor ?? context.colorScheme.onPrimary,
-                    fontWeight: FontWeight.w500,
                   ),
                   child: const Text("SmartAttend"),
                 ),

@@ -88,6 +88,7 @@ class _CoursesPageState extends ConsumerState<CoursesPage>
                   style: context.textTheme.headlineSmall!.copyWith(
                     color: context.colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
+                    fontFamily: "Segoe UI",
                   ),
                 ),
               ),
@@ -175,7 +176,7 @@ class _CoursesPageState extends ConsumerState<CoursesPage>
                       "Mark Attendance",
                       style: context.textTheme.bodyLarge!.copyWith(
                         color: context.colorScheme.onPrimary,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     onPressed: () {},

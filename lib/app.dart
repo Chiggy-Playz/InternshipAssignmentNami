@@ -19,7 +19,7 @@ class SmartAttendApp extends ConsumerWidget {
             return MaterialApp.router(
               routerConfig: router,
               title: 'Smart Attend',
-              theme: lightTheme,
+              theme: updateTextTheme(lightTheme),
             );
           },
         );

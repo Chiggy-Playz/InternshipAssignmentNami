@@ -58,7 +58,9 @@ class _CourseDetailsPageState extends ConsumerState<CourseDetailsPage> {
                   ),
                   text: Text(
                     course.location,
-                    style: context.textTheme.titleMedium,
+                    style: context.textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -69,7 +71,9 @@ class _CourseDetailsPageState extends ConsumerState<CourseDetailsPage> {
                   ),
                   text: Text(
                     course.time,
-                    style: context.textTheme.titleMedium,
+                    style: context.textTheme.titleMedium!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -85,7 +89,7 @@ class _CourseDetailsPageState extends ConsumerState<CourseDetailsPage> {
                   "Mark Attendance",
                   style: context.textTheme.bodyLarge!.copyWith(
                     color: context.colorScheme.onPrimary,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
