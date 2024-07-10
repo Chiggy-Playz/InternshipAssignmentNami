@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nami_assignment/core/notifications.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -47,7 +46,7 @@ void onStart(ServiceInstance service) async {
 
   while (channel == null) {
     try {
-      final wsUrl = Uri.parse('ws://192.168.1.206:3000');
+      final wsUrl = Uri.parse('ws://demo.chiggydoes.tech');
       channel = WebSocketChannel.connect(wsUrl);
 
       await channel.ready;
