@@ -27,6 +27,6 @@ The websocket server is deployed at demo.chiggydoes.tech. No configuration is ne
 The socket server code is available [here](https://github.com/Chiggy-Playz/InternshipAssignmentNamiNode)
 
 ## Screen Recording
-
+Link: https://raw.githubusercontent.com/Chiggy-Playz/InternshipAssignmentNami/master/ScreenRecording.gif
 ![SmartAttend](https://raw.githubusercontent.com/Chiggy-Playz/InternshipAssignmentNami/master/ScreenRecording.gif)
 
