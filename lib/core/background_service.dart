@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -78,11 +79,13 @@ void onStart(ServiceInstance service) async {
       debugPrint("Received data from server: $event");
       // Show a notification
 
+      final data = json.decode(event as String);
+
       LocalNotificationsHandler.showNotification(
         // Simple way to get a unique id for the notification
         UniqueKey().hashCode,
-        "Yo you got a message",
-        "$event",
+        data["title"] ?? "Default Title",
+        data["body"] ?? "Default Message",
       );
     },
   );

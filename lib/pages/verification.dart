@@ -119,7 +119,7 @@ class _VerificationPageState extends ConsumerState<VerificationPage>
   }
 
   void showSubmissionDialog() async {
-    service.invoke("send", {"message": "attendance-marked"});
+    service.invoke("send", {"message": "Attendance Marked!"});
 
     showDialog(
       context: context,
