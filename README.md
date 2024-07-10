@@ -1,16 +1,30 @@
-# nami_assignment
+# SmartAttend
 
-A new Flutter project.
+A demo app made for Nami's Flutter Developer Internship application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+You can download the apk from the [releases](https://github.com/Chiggy-Playz/InternshipAssignmentNami/releases) or build the app yourself.
 
-A few resources to get you started if this is your first Flutter project:
+1. Clone the repository:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Run the following command to get the dependencies:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter pub get
+```
+
+3. Run the following command to run the app:
+
+```bash
+flutter run
+```
+
+## Websocket Server
+
+The websocket server is deployed at demo.chiggydoes.tech. No configuration is needed to connect to the server. It's a simple echo server that sends back the message it receives after 10 seconds.
+
+The socket server code is available [here](https://github.com/Chiggy-Playz/InternshipAssignmentNamiNode)
+
+## Screen Recording
+
