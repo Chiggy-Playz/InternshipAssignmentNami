@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:nami_assignment/core/background_service.dart';
 import 'package:nami_assignment/core/extensions.dart';
 import 'package:nami_assignment/style/icons.dart';
 import 'package:nami_assignment/widgets/appbar.dart' as appbar;
@@ -117,7 +118,10 @@ class _VerificationPageState extends ConsumerState<VerificationPage>
         ));
   }
 
-  void showSubmissionDialog() {
+  void showSubmissionDialog() async {
+
+    service.invoke("send", {"message": "attendance-marked"});
+
     showDialog(
       context: context,
       builder: (context) {
